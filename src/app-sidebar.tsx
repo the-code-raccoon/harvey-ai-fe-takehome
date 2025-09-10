@@ -1,4 +1,4 @@
-import { Home, Inbox, Calendar, Search, Settings } from 'lucide-react'
+import { Home, Inbox, Calendar, Settings, Trash } from 'lucide-react'
 import {
   SidebarContent,
   SidebarGroup,
@@ -7,8 +7,8 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarRail,
   Sidebar,
+  SidebarFooter,
 } from './components/ui/sidebar'
 
 const items = [
@@ -28,9 +28,9 @@ const items = [
     icon: Calendar,
   },
   {
-    title: 'Search',
+    title: 'Trash',
     url: '#',
-    icon: Search,
+    icon: Trash,
   },
   {
     title: 'Settings',
@@ -61,6 +61,7 @@ const AppSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>Dark Mode</SidebarFooter>
     </Sidebar>
   )
 }
