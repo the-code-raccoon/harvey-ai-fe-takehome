@@ -1,8 +1,9 @@
 import type { ColumnDef } from '@tanstack/react-table'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu'
-import { Download, FolderOpen, MoreHorizontal, PencilLine, Trash } from 'lucide-react'
+import { Folder, File } from 'lucide-react'
 import { Button } from '../ui/button'
 import DirectionIcon from './DirectionIcon'
+import { match } from 'ts-pattern'
+import ActionsCell from './ActionsCell'
 
 export type DataEntity = {
   id: string
@@ -29,6 +30,29 @@ export const columns: ColumnDef<DataEntity>[] = [
           Name
           <DirectionIcon direction={currentSortDirection} />
         </Button>
+      )
+    },
+    cell: ({ row }) => {
+      const name = row.getValue('name') satisfies string
+      const type = row.getValue('type')
+
+      return (
+        <div className="flex gap-2 items-center">
+          {match(type)
+            .with('folder', () => (
+              <>
+                <Folder className="h-4 w-4" />
+                {name}
+              </>
+            ))
+            .with('file', () => (
+              <>
+                <File className="h-4 w-4" />
+                {name}
+              </>
+            ))
+            .otherwise(() => name)}
+        </div>
       )
     },
   },
@@ -68,32 +92,54 @@ export const columns: ColumnDef<DataEntity>[] = [
   {
     id: 'actions',
     header: 'Actions',
-    cell: () => {
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <MoreHorizontal className="h-4 w-4" />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start">
-            <DropdownMenuItem>
-              <FolderOpen className="h-4 w-4" />
-              Open
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <PencilLine className="h-4 w-4" />
-              Rename
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Download className="h-4 w-4" />
-              Download
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Trash className="h-4 w-4" />
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
+    cell: ({ row }) => <ActionsCell row={row} />,
+    // cell: ({ row }) => {
+    //   const type = row.getValue('type')
+    //   const [open, setOpen] = useState(false)
+
+    //   return (
+    //     <>
+    //       <DropdownMenu>
+    //         <DropdownMenuTrigger>
+    //           <MoreHorizontal className="h-4 w-4" />
+    //         </DropdownMenuTrigger>
+    //         <DropdownMenuContent align="start">
+    //           {type === 'file' ? (
+    //             <DropdownMenuItem>
+    //               <FolderOpen className="h-4 w-4" />
+    //               Open
+    //             </DropdownMenuItem>
+    //           ) : null}
+    //           <DropdownMenuItem>
+    //             <PencilLine className="h-4 w-4" />
+    //             Rename
+    //           </DropdownMenuItem>
+    //           <DropdownMenuItem>
+    //             <Download className="h-4 w-4" />
+    //             Download
+    //           </DropdownMenuItem>
+
+    //           <DropdownMenuItem onSelect={() => setOpen(true)}>
+    //             <Trash className="h-4 w-4" />
+    //             Delete
+    //           </DropdownMenuItem>
+    //         </DropdownMenuContent>
+    //       </DropdownMenu>
+
+    //       <Dialog open={open} onOpenChange={setOpen}>
+    //         <DialogPortal>
+    //           <DialogContent>
+    //             <DialogHeader>
+    //               <DialogTitle>Upload File</DialogTitle>
+    //             </DialogHeader>
+    //             <DialogDescription>
+    //               Are you sure you want to permanently delete {row.getValue('name')}?
+    //             </DialogDescription>
+    //           </DialogContent>
+    //         </DialogPortal>
+    //       </Dialog>
+    //     </>
+    //   )
+    // },
   },
 ]
