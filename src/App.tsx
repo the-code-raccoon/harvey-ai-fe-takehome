@@ -11,6 +11,41 @@ import { Button } from './components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './components/ui/dropdown-menu'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './components/ui/table'
 import { File, Folder, MoreHorizontal, Plus, Upload } from 'lucide-react'
+import { columns, type DataEntity } from './components/DataTable/columns'
+import { DataTable } from './components/DataTable/data-table'
+
+const data: DataEntity[] = [
+  {
+    id: '1',
+    parentFolder: null,
+    name: 'Home',
+    type: 'folder',
+  },
+  {
+    id: '3',
+    parentFolder: '1',
+    name: 'A Folder',
+    type: 'folder',
+  },
+  {
+    id: '2',
+    parentFolder: '1',
+    name: 'Folder 1',
+    type: 'folder',
+  },
+  {
+    id: '100',
+    parentFolder: '1',
+    name: 'document1.pdf',
+    type: 'file',
+  },
+  {
+    id: '101',
+    parentFolder: '2',
+    name: 'document2.pdf',
+    type: 'file',
+  },
+]
 
 const App = () => {
   return (
@@ -48,7 +83,7 @@ const App = () => {
                       New
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent>
+                  <DropdownMenuContent align="end">
                     <DropdownMenuItem>
                       <Folder />
                       New Folder
@@ -63,59 +98,7 @@ const App = () => {
             </div>
 
             <div className="flex-1 overflow-auto p-4">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Owner</TableHead>
-                    <TableHead>Last Modified</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell className="flex items-center gap-2">
-                      <Folder className="h-4 w-4" />
-                      Project Alpha
-                    </TableCell>
-                    <TableCell>Me</TableCell>
-                    <TableCell>2 days ago</TableCell>
-                    <TableCell className="text-right">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger>
-                          <MoreHorizontal className="h-4 w-4" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          <DropdownMenuItem>Open</DropdownMenuItem>
-                          <DropdownMenuItem>Share</DropdownMenuItem>
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell className="flex items-center gap-2">
-                      <File className="h-4 w-4" />
-                      Report.pdf
-                    </TableCell>
-                    <TableCell>Me</TableCell>
-                    <TableCell>1 week ago</TableCell>
-                    <TableCell className="text-right">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger>
-                          <MoreHorizontal className="h-4 w-4" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          <DropdownMenuItem>Open</DropdownMenuItem>
-                          <DropdownMenuItem>Rename</DropdownMenuItem>
-                          <DropdownMenuItem>Download</DropdownMenuItem>
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
+              <DataTable columns={columns} data={data} />
             </div>
           </div>
         </div>
