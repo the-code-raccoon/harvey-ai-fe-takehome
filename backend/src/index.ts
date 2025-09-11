@@ -2,9 +2,11 @@ import config from './config.ts'
 import express from 'express'
 import data from './data.ts'
 import type { DataEntity } from './types.ts'
+import cors from 'cors'
 
 const app = express()
 
+app.use(cors())
 app.use(express.json())
 
 const findData = (data: DataEntity, id: string): DataEntity | null => {
