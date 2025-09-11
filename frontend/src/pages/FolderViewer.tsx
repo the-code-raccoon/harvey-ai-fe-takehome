@@ -1,10 +1,3 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-} from '../components/ui/breadcrumb'
 import { Button } from '../components/ui/button'
 import {
   DropdownMenu,
@@ -19,50 +12,41 @@ import { Dialog, DialogContent, DialogHeader, DialogPortal, DialogTitle, DialogT
 import { Dropzone, DropzoneContent, DropzoneEmptyState } from '../components/ui/shadcn-io/dropzone'
 import { useEffect, useState } from 'react'
 import type { Folder } from '../types'
+import { useLoaderData } from 'react-router'
+import { FolderBreadcrumb } from '@/components/BreadCrumb'
 
-const Home = () => {
+const FolderViewer = () => {
+  const { id } = useLoaderData() as { id: string }
+
   const [files, setFiles] = useState<File[] | undefined>()
   const [dialogError, setDialogError] = useState<string | undefined>()
-  const [homeFolder, setHomeFolder] = useState<Folder | undefined>()
+  const [folder, setFolder] = useState<Folder | undefined>()
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:3000/folder/1')
+      const response = await fetch(`http://localhost:3000/folder/${id}`)
 
       if (!response.ok) {
         throw new Error('No home folder found')
       }
 
-      setHomeFolder(await response.json())
+      setFolder(await response.json())
     }
 
     fetchData()
-  }, [])
+  }, [id])
 
   const handleDrop = (files: File[]) => {
     console.log(files)
     setFiles(files)
   }
 
+  console.log(folder)
+
   return (
     <div className="flex flex-1 flex-col">
       <div className="flex items-center justify-between border-b p-4">
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="#">Drive</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink href="#">Folder 1</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink href="#">Folder 2</BreadcrumbLink>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-
+        <FolderBreadcrumb currentId={id} />
         <div className="flex items-center gap-2">
           <Dialog>
             <DialogTrigger asChild>
@@ -127,13 +111,13 @@ const Home = () => {
         </div>
       </div>
 
-      {homeFolder && (
+      {folder && (
         <div className="flex-1 overflow-auto p-4">
-          <DataTable columns={columns} data={homeFolder.children} />
+          <DataTable columns={columns} data={folder.children} />
         </div>
       )}
     </div>
   )
 }
 
-export default Home
+export default FolderViewer

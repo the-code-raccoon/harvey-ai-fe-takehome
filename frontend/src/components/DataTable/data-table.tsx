@@ -6,18 +6,24 @@ import {
   type SortingState,
   useReactTable,
 } from '@tanstack/react-table'
+import { useNavigate } from 'react-router'
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { useState } from 'react'
 
-interface DataTableProps<TData, TValue> {
+type DataWithId = {
+  id: string
+}
+
+type DataTableProps<TData extends DataWithId, TValue> = {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData extends DataWithId, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
 
+  const navigate = useNavigate()
   const table = useReactTable({
     data,
     columns,
@@ -48,7 +54,14 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
         <TableBody>
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && 'selected'}
+                onClick={() => {
+                  navigate(`/${row.original.id}`)
+                }}
+                className="cursor-pointer"
+              >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                 ))}
