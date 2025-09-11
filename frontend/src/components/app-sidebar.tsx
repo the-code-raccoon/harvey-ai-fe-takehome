@@ -12,7 +12,7 @@ import {
   SidebarHeader,
   SidebarTrigger,
   useSidebar,
-} from './components/ui/sidebar'
+} from './ui/sidebar'
 
 const items = [
   {

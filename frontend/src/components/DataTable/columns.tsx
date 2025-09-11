@@ -4,21 +4,7 @@ import { Button } from '../ui/button'
 import DirectionIcon from './DirectionIcon'
 import { match } from 'ts-pattern'
 import ActionsCell from './ActionsCell'
-
-export type DataEntity = {
-  id: string
-  parentFolder: string | null // only the base directory can be null
-  name: string
-  type: 'folder' | 'file'
-}
-
-export type Folder = DataEntity & {
-  type: 'folder'
-}
-
-export type File = DataEntity & {
-  type: 'file'
-}
+import type { DataEntity } from '@/types'
 
 export const columns: ColumnDef<DataEntity>[] = [
   {
