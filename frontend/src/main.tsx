@@ -1,10 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import FolderViewer from './pages/FolderViewer.tsx'
+import FolderViewer from './pages/FolderViewer/FolderViewer.tsx'
 import { createBrowserRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
-import Layout from './pages/Layout.tsx'
+import Layout from './pages/Layout/Layout.tsx'
+import { folderViewerLoader } from './pages/FolderViewer/loader.ts'
+import { renameFileAction, renameFolderAction } from './forms/RenameDialogForm/action.ts'
 
 const router = createBrowserRouter([
   {
@@ -14,11 +16,17 @@ const router = createBrowserRouter([
       {
         path: ':id?',
         element: <FolderViewer />,
-        loader: ({ params }) => {
-          return { id: params.id ?? '1' }
-        },
+        loader: folderViewerLoader,
       },
     ],
+  },
+  {
+    path: '/file/:id',
+    action: renameFileAction,
+  },
+  {
+    path: '/folder/:id',
+    action: renameFolderAction,
   },
 ])
 

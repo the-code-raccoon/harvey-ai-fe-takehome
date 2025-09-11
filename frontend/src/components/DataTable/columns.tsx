@@ -1,4 +1,4 @@
-import type { ColumnDef } from '@tanstack/react-table'
+import type { ColumnDef, Row } from '@tanstack/react-table'
 import { Folder, File } from 'lucide-react'
 import { Button } from '../ui/button'
 import DirectionIcon from './DirectionIcon'
@@ -80,6 +80,10 @@ export const columns: ColumnDef<DataEntity>[] = [
   {
     id: 'actions',
     header: 'Actions',
-    cell: ({ row }) => <ActionsCell row={row} />,
+    cell: ({ row, table }) => {
+      // @ts-expect-error: to avoid having to type table.options.meta
+      const onRename = table.options.meta?.onRename as (row: Row<DataEntity>) => void
+      return <ActionsCell row={row} onRename={onRename} />
+    },
   },
 ]

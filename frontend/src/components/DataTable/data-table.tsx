@@ -3,6 +3,7 @@ import {
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
+  type Row,
   type SortingState,
   useReactTable,
 } from '@tanstack/react-table'
@@ -10,9 +11,12 @@ import { useNavigate } from 'react-router'
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { useState } from 'react'
+import RenameDialogForm from '@/forms/RenameDialogForm/RenameDialogForm'
+import type { DataEntity } from '@/types'
 
 type DataWithId = {
   id: string
+  type: 'folder' | 'file'
 }
 
 type DataTableProps<TData extends DataWithId, TValue> = {
@@ -23,7 +27,16 @@ type DataTableProps<TData extends DataWithId, TValue> = {
 export function DataTable<TData extends DataWithId, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
 
+  const [selectedRow, setSelectedRow] = useState<Row<DataEntity> | null>(null)
+  const [dialogOpen, setDialogOpen] = useState(false)
+
+  const openRenameDialog = (row: Row<DataEntity>) => {
+    setSelectedRow(row)
+    setDialogOpen(true)
+  }
+
   const navigate = useNavigate()
+
   const table = useReactTable({
     data,
     columns,
@@ -32,6 +45,9 @@ export function DataTable<TData extends DataWithId, TValue>({ columns, data }: D
     getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
+    },
+    meta: {
+      onRename: openRenameDialog,
     },
   })
 
@@ -57,8 +73,13 @@ export function DataTable<TData extends DataWithId, TValue>({ columns, data }: D
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && 'selected'}
-                onClick={() => {
-                  navigate(`/${row.original.id}`)
+                onClick={(e) => {
+                  if (e.currentTarget.tagName === 'tr') {
+                    console.log('SOLUTION')
+                    if (row.original.type === 'folder') {
+                      navigate(`/${row.original.id}`)
+                    }
+                  }
                 }}
                 className="cursor-pointer"
               >
@@ -76,6 +97,8 @@ export function DataTable<TData extends DataWithId, TValue>({ columns, data }: D
           )}
         </TableBody>
       </Table>
+
+      {selectedRow && <RenameDialogForm row={selectedRow} open={dialogOpen} setOpen={setDialogOpen} />}
     </div>
   )
 }

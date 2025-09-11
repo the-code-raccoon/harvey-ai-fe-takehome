@@ -1,52 +1,42 @@
-import { Button } from '../components/ui/button'
+import { Button } from '../../components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '../components/ui/dropdown-menu'
+} from '../../components/ui/dropdown-menu'
 import { File, Folder as FolderIcon, Plus, Upload } from 'lucide-react'
-import { columns } from '../components/DataTable/columns'
-import { DataTable } from '../components/DataTable/data-table'
-import { Dialog, DialogContent, DialogHeader, DialogPortal, DialogTitle, DialogTrigger } from '../components/ui/dialog'
-import { Dropzone, DropzoneContent, DropzoneEmptyState } from '../components/ui/shadcn-io/dropzone'
-import { useEffect, useState } from 'react'
-import type { Folder } from '../types'
+import { columns } from '../../components/DataTable/columns'
+import { DataTable } from '../../components/DataTable/data-table'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogPortal,
+  DialogTitle,
+  DialogTrigger,
+} from '../../components/ui/dialog'
+import { Dropzone, DropzoneContent, DropzoneEmptyState } from '../../components/ui/shadcn-io/dropzone'
+import { useState } from 'react'
 import { useLoaderData } from 'react-router'
 import { FolderBreadcrumb } from '@/components/BreadCrumb'
+import type { FolderViewerLoaderData } from './loader'
 
 const FolderViewer = () => {
-  const { id } = useLoaderData() as { id: string }
+  const { folder, path } = useLoaderData() as FolderViewerLoaderData
 
   const [files, setFiles] = useState<File[] | undefined>()
   const [dialogError, setDialogError] = useState<string | undefined>()
-  const [folder, setFolder] = useState<Folder | undefined>()
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`http://localhost:3000/folder/${id}`)
-
-      if (!response.ok) {
-        throw new Error('No home folder found')
-      }
-
-      setFolder(await response.json())
-    }
-
-    fetchData()
-  }, [id])
 
   const handleDrop = (files: File[]) => {
     console.log(files)
     setFiles(files)
   }
 
-  console.log(folder)
-
   return (
     <div className="flex flex-1 flex-col">
       <div className="flex items-center justify-between border-b p-4">
-        <FolderBreadcrumb currentId={id} />
+        <FolderBreadcrumb path={path} />
         <div className="flex items-center gap-2">
           <Dialog>
             <DialogTrigger asChild>

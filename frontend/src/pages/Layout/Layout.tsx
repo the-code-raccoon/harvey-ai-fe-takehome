@@ -1,5 +1,5 @@
-import { SidebarInset, SidebarProvider } from '../components/ui/sidebar'
-import Sidebar from '../components/Sidebar'
+import { SidebarInset, SidebarProvider } from '../../components/ui/sidebar'
+import Sidebar from '../../components/Sidebar'
 import { Outlet } from 'react-router'
 
 const Layout = () => {
