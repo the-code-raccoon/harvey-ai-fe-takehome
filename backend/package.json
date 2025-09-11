@@ -2,9 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "src/index.ts",
   "scripts": {
-    "dev": "nodemon src/server.ts",
+    "dev": "tsx watch src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -18,10 +18,9 @@
     "eslint": "^9.35.0",
     "express": "^5.1.0",
     "install": "^0.13.0",
-    "nodemon": "^3.1.10",
     "npm": "^11.6.0",
     "prettier": "^3.6.2",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.20.5",
     "typescript": "^5.9.2"
   }
 }
