@@ -70,7 +70,7 @@ export function DataTable<TData extends DataWithId, TValue>({ columns, data }: D
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
+                This folder is empty.
               </TableCell>
             </TableRow>
           )}
