@@ -11,9 +11,9 @@ import { useNavigate } from 'react-router'
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { useState } from 'react'
-import RenameDialogForm from '@/forms/RenameDialogForm/RenameDialogForm'
 import type { DataEntity } from '@/types'
-import DeleteDialogForm from '@/forms/DeleteDialogForm/DeleteDialogForm'
+import RenameDialogForm from '@/forms/RenameDialogForm'
+import DeleteDialogForm from '@/forms/DeleteDialogForm'
 
 type DataWithId = {
   id: string

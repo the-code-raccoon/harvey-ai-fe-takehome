@@ -5,7 +5,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '../../components/ui/dropdown-menu'
-import { File, Folder as FolderIcon, Plus, Upload } from 'lucide-react'
+import { Folder as FolderIcon, Plus, Upload } from 'lucide-react'
 import { columns } from '../../components/DataTable/columns'
 import { DataTable } from '../../components/DataTable/data-table'
 import {
@@ -21,12 +21,14 @@ import { useState } from 'react'
 import { useLoaderData } from 'react-router'
 import { FolderBreadcrumb } from '@/components/BreadCrumb'
 import type { FolderViewerLoaderData } from './loader'
+import CreateFolderDialogForm from '@/forms/CreateFolderDialogForm'
 
 const FolderViewer = () => {
   const { folder, path } = useLoaderData() as FolderViewerLoaderData
 
   const [files, setFiles] = useState<File[] | undefined>()
   const [dialogError, setDialogError] = useState<string | undefined>()
+  const [createFolderDialogOpen, setCreateFolderDialogOpen] = useState(false)
 
   const handleDrop = (files: File[]) => {
     console.log(files)
@@ -88,13 +90,9 @@ const FolderViewer = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setCreateFolderDialogOpen(true)}>
                 <FolderIcon className="h-4 w-4" />
                 New Folder
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <File className="h-4 w-4" />
-                New File
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -105,6 +103,14 @@ const FolderViewer = () => {
         <div className="flex-1 overflow-auto p-4">
           <DataTable columns={columns} data={folder.children} />
         </div>
+      )}
+
+      {folder && (
+        <CreateFolderDialogForm
+          open={createFolderDialogOpen}
+          setOpen={setCreateFolderDialogOpen}
+          parentFolder={folder}
+        />
       )}
     </div>
   )

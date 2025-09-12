@@ -5,8 +5,8 @@ import {
   DialogHeader,
   DialogPortal,
   DialogTitle,
-} from '../../components/ui/dialog'
-import { Button } from '../../components/ui/button'
+} from '../components/ui/dialog'
+import { Button } from '../components/ui/button'
 import type { Row } from '@tanstack/react-table'
 import type { DataEntity } from '@/types'
 import { Form } from 'react-router'
@@ -25,6 +25,7 @@ const DeleteDialogForm = ({ row, open, setOpen }: DeleteDialogFormProps) => {
           <DialogHeader>
             <DialogTitle>Delete File</DialogTitle>
           </DialogHeader>
+
           <DialogDescription>
             Are you sure you want to permanently delete <b>{row.getValue('name')}</b>?
           </DialogDescription>

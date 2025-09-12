@@ -6,8 +6,13 @@ import Layout from './pages/Layout/Layout.tsx'
 import { createBrowserRouter, type ActionFunctionArgs } from 'react-router'
 import { RouterProvider } from 'react-router'
 import { folderViewerLoader } from './pages/FolderViewer/loader.ts'
-import { renameFileAction, renameFolderAction } from './forms/RenameDialogForm/action.ts'
-import { deleteFileAction, deleteFolderAction } from './forms/DeleteDialogForm/action.ts'
+import {
+  deleteFolderAction,
+  deleteFileAction,
+  renameFolderAction,
+  renameFileAction,
+  createFolderAction,
+} from './actions'
 
 const router = createBrowserRouter([
   {
@@ -32,6 +37,8 @@ const router = createBrowserRouter([
               return await renameFileAction(formData)
             case 'renameFolder':
               return await renameFolderAction(formData)
+            case 'createFolder':
+              return await createFolderAction(formData)
           }
         },
       },
