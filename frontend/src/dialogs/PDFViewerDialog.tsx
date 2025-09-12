@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogPortal, DialogTitle } from '
 import type { DataEntity } from '@/types'
 import { useEffect, useState } from 'react'
 import { getFile } from '@/lib/db'
+import { truncateString } from '@/lib/utils'
 
 type PDFViewerDialogProps = {
   row: Row<DataEntity>
@@ -33,7 +34,7 @@ const PDFViewerDialog = ({ row, open, setOpen }: PDFViewerDialogProps) => {
       <DialogPortal>
         <DialogContent className="flex flex-col w-5xl sm:max-w-5xl h-[90vh]">
           <DialogHeader>
-            <DialogTitle>{name}</DialogTitle>
+            <DialogTitle>{truncateString(name, 50)}</DialogTitle>
           </DialogHeader>
           {url ? <iframe src={url} width="100%" height="100%" style={{ border: 'none' }} /> : null}
         </DialogContent>

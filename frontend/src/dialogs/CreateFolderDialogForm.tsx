@@ -11,6 +11,7 @@ import { Form } from 'react-router'
 import { Input } from '@/components/ui/input'
 import { useState } from 'react'
 import type { Folder } from '@/types'
+import { truncateString } from '@/lib/utils'
 
 type CreateFolderDialogFormProps = {
   parentFolder: Folder
@@ -30,7 +31,7 @@ const CreateFolderDialogForm = ({ parentFolder, open, setOpen }: CreateFolderDia
           </DialogHeader>
 
           <DialogDescription>
-            This folder will be created inside of <b>{parentFolder.name}</b>.
+            This folder will be created inside of <b>{truncateString(parentFolder.name, 70)}</b>.
           </DialogDescription>
 
           <Form method="post" className="flex flex-col w-full justify-start gap-3" onSubmit={() => setOpen(false)}>
