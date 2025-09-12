@@ -5,6 +5,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
+import { truncateString } from '@/lib/utils'
 import type { Folder } from '@/types'
 import { Fragment } from 'react'
 import { useNavigate } from 'react-router'
@@ -23,11 +24,11 @@ export function FolderBreadcrumb({ path }: FolderBreadcrumbProps) {
           <Fragment key={item.id}>
             <BreadcrumbItem>
               {index === path.length - 1 ? (
-                <span>{item.name}</span>
+                <span>{truncateString(item.name, 20)}</span>
               ) : (
                 <>
                   <BreadcrumbLink className="cursor-pointer" onClick={() => navigate(`/${item.id}`)}>
-                    {item.name}
+                    {truncateString(item.name, 20)}
                   </BreadcrumbLink>
                 </>
               )}
