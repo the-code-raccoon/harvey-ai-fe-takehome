@@ -1,8 +1,8 @@
 import config from './config.ts'
 import express from 'express'
 import cors from 'cors'
-import folderRouter from './routes/folder.ts'
-import fileRouter from './routes/file.ts'
+import folderRouter from './routes/folderRoutes.ts'
+import fileRouter from './routes/fileRoutes.ts'
 
 const app = express()
 

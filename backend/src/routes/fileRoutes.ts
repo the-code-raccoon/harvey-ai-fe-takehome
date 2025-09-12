@@ -4,23 +4,6 @@ import type { File } from '../types.ts'
 
 const fileRouter = Router()
 
-fileRouter.get('/:id', (req, res) => {
-  const id = req.params.id
-
-  if (!id || typeof id !== 'string' || !/^-?\d+$/.test(id)) {
-    res.status(400).send('Invalid id')
-    return
-  }
-
-  const file = data[id]
-  if (!file || file.type !== 'file') {
-    res.status(400).send('No file found')
-    return
-  }
-
-  res.json(file)
-})
-
 fileRouter.post('', (req, res) => {
   const { name, parentFolder } = req.body
 
