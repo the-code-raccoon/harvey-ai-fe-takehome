@@ -13,6 +13,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { useState } from 'react'
 import RenameDialogForm from '@/forms/RenameDialogForm/RenameDialogForm'
 import type { DataEntity } from '@/types'
+import DeleteDialogForm from '@/forms/DeleteDialogForm/DeleteDialogForm'
 
 type DataWithId = {
   id: string
@@ -28,11 +29,17 @@ export function DataTable<TData extends DataWithId, TValue>({ columns, data }: D
   const [sorting, setSorting] = useState<SortingState>([])
 
   const [selectedRow, setSelectedRow] = useState<Row<DataEntity> | null>(null)
-  const [dialogOpen, setDialogOpen] = useState(false)
+  const [renameDialogOpen, setRenameDialogOpen] = useState(false)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
   const openRenameDialog = (row: Row<DataEntity>) => {
     setSelectedRow(row)
-    setDialogOpen(true)
+    setRenameDialogOpen(true)
+  }
+
+  const openDeleteDialog = (row: Row<DataEntity>) => {
+    setSelectedRow(row)
+    setDeleteDialogOpen(true)
   }
 
   const navigate = useNavigate()
@@ -48,6 +55,7 @@ export function DataTable<TData extends DataWithId, TValue>({ columns, data }: D
     },
     meta: {
       onRename: openRenameDialog,
+      onDelete: openDeleteDialog,
     },
   })
 
@@ -73,12 +81,9 @@ export function DataTable<TData extends DataWithId, TValue>({ columns, data }: D
               <TableRow
                 key={row.id}
                 data-state={row.getIsSelected() && 'selected'}
-                onClick={(e) => {
-                  if (e.currentTarget.tagName === 'tr') {
-                    console.log('SOLUTION')
-                    if (row.original.type === 'folder') {
-                      navigate(`/${row.original.id}`)
-                    }
+                onClick={() => {
+                  if (row.original.type === 'folder') {
+                    navigate(`/${row.original.id}`)
                   }
                 }}
                 className="cursor-pointer"
@@ -98,7 +103,8 @@ export function DataTable<TData extends DataWithId, TValue>({ columns, data }: D
         </TableBody>
       </Table>
 
-      {selectedRow && <RenameDialogForm row={selectedRow} open={dialogOpen} setOpen={setDialogOpen} />}
+      {selectedRow && <RenameDialogForm row={selectedRow} open={renameDialogOpen} setOpen={setRenameDialogOpen} />}
+      {selectedRow && <DeleteDialogForm row={selectedRow} open={deleteDialogOpen} setOpen={setDeleteDialogOpen} />}
     </div>
   )
 }

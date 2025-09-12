@@ -4,7 +4,7 @@ import { Input } from '../../components/ui/input'
 import { useState } from 'react'
 import type { Row } from '@tanstack/react-table'
 import type { DataEntity } from '@/types'
-import { useFetcher } from 'react-router'
+import { Form } from 'react-router'
 
 type RenameDialogFormProps = {
   row: Row<DataEntity>
@@ -14,10 +14,7 @@ type RenameDialogFormProps = {
 
 const RenameDialogForm = ({ row, open, setOpen }: RenameDialogFormProps) => {
   const name = row.getValue('name') satisfies string
-  const type = row.getValue('type') satisfies 'folder' | 'file'
   const [newName, setNewName] = useState<string>(name)
-
-  const fetcher = useFetcher()
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -27,12 +24,9 @@ const RenameDialogForm = ({ row, open, setOpen }: RenameDialogFormProps) => {
             <DialogTitle>Rename</DialogTitle>
           </DialogHeader>
 
-          <fetcher.Form
-            method="patch"
-            action={type === 'file' ? `/file/${row.original.id}` : `/folder/${row.original.id}`}
-            className="flex flex-col w-full justify-start gap-3"
-          >
+          <Form method="post" className="flex flex-col w-full justify-start gap-3" onSubmit={() => setOpen(false)}>
             <input type="hidden" name="id" value={row.original.id} />
+            <input type="hidden" name="action" value={row.original.type === 'file' ? 'renameFile' : 'renameFolder'} />
             <Input
               type="text"
               name="name"
@@ -48,11 +42,9 @@ const RenameDialogForm = ({ row, open, setOpen }: RenameDialogFormProps) => {
               <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit" onClick={() => setOpen(false)}>
-                Save
-              </Button>
+              <Button type="submit">Save</Button>
             </div>
-          </fetcher.Form>
+          </Form>
         </DialogContent>
       </DialogPortal>
     </Dialog>

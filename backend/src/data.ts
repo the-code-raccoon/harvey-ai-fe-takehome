@@ -32,6 +32,18 @@ const data: { [key: string]: DataEntity } = {
     name: 'document1.pdf',
     type: 'file',
   },
+  '102': {
+    id: '102',
+    parentFolder: '1',
+    name: 'document3',
+    type: 'file',
+  },
+  '103': {
+    id: '103',
+    parentFolder: '1',
+    name: 'document4',
+    type: 'file',
+  },
 }
 
 export default data

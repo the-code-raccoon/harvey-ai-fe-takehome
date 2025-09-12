@@ -1,7 +1,4 @@
-import type { ActionFunctionArgs } from 'react-router'
-
-export async function renameFileAction({ request }: ActionFunctionArgs) {
-  const formData = await request.formData()
+export async function renameFileAction(formData: FormData) {
   const name = formData.get('name') as string
   const id = formData.get('id') as string
 
@@ -16,10 +13,10 @@ export async function renameFileAction({ request }: ActionFunctionArgs) {
   if (!response.ok) {
     throw new Response('Could not update name', { status: 500 })
   }
+  return null
 }
 
-export async function renameFolderAction({ request }: ActionFunctionArgs) {
-  const formData = await request.formData()
+export async function renameFolderAction(formData: FormData) {
   const name = formData.get('name') as string
   const id = formData.get('id') as string
 
@@ -34,4 +31,5 @@ export async function renameFolderAction({ request }: ActionFunctionArgs) {
   if (!response.ok) {
     throw new Response('Could not update name', { status: 500 })
   }
+  return null
 }

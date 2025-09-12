@@ -7,9 +7,10 @@ import type { DataEntity } from '@/types'
 type ActionsCellProps = {
   row: Row<DataEntity>
   onRename: (row: Row<DataEntity>) => void
+  onDelete: (row: Row<DataEntity>) => void
 }
 
-const ActionsCell = ({ row, onRename }: ActionsCellProps) => {
+const ActionsCell = ({ row, onRename, onDelete }: ActionsCellProps) => {
   const type = row.getValue('type') satisfies string
 
   return (
@@ -22,47 +23,35 @@ const ActionsCell = ({ row, onRename }: ActionsCellProps) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
           {type === 'file' ? (
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
               <FolderOpen className="h-4 w-4" />
               Open
             </DropdownMenuItem>
           ) : null}
-          <DropdownMenuItem onClick={() => onRename(row)}>
+          <DropdownMenuItem
+            onClick={(e) => {
+              e.stopPropagation()
+              onRename(row)
+            }}
+          >
             <PencilLine className="h-4 w-4" />
             Rename
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
             <Download className="h-4 w-4" />
             Download
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={(e) => {
+              e.stopPropagation()
+              onDelete(row)
+            }}
+          >
             <Trash className="h-4 w-4" />
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-
-      {/* Delete dialog */}
-      {/* <Dialog open={openDelete} onOpenChange={setOpenDelete}>
-        <DialogPortal>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Delete File</DialogTitle>
-            </DialogHeader>
-            <DialogDescription>
-              Are you sure you want to permanently delete <b>{row.getValue('name')}</b>?
-            </DialogDescription>
-            <div className="flex justify-end gap-4">
-              <Button variant="secondary" onClick={() => setOpenDelete(false)}>
-                Cancel
-              </Button>
-              <Button variant="destructive" onClick={() => setOpenDelete(false)}>
-                Delete Permanently
-              </Button>
-            </div>
-          </DialogContent>
-        </DialogPortal>
-      </Dialog> */}
     </>
   )
 }
