@@ -7,7 +7,7 @@ import {
 } from '../../components/ui/dropdown-menu'
 import { Folder as FolderIcon, Plus, Upload } from 'lucide-react'
 import { columns } from '../../components/DataTable/columns'
-import { DataTable } from '../../components/DataTable/data-table'
+import { DataTable } from '../../components/DataTable/DataTable'
 import {
   Dialog,
   DialogContent,
