@@ -1,4 +1,4 @@
-import { saveFile } from '@/db'
+import { saveFile } from '@/lib/db'
 import type { File as FileEntity } from '@/types'
 
 export async function uploadFileAction(formData: FormData) {

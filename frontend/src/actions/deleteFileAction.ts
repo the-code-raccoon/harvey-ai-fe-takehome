@@ -1,4 +1,4 @@
-import { deleteFile } from '@/db'
+import { deleteFile } from '@/lib/db'
 
 export async function deleteFileAction(formData: FormData) {
   const id = formData.get('id') as string

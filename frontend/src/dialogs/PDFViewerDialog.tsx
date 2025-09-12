@@ -2,7 +2,7 @@ import type { Row } from '@tanstack/react-table'
 import { Dialog, DialogContent, DialogHeader, DialogPortal, DialogTitle } from '../components/ui/dialog'
 import type { DataEntity } from '@/types'
 import { useEffect, useState } from 'react'
-import { getFile } from '@/db'
+import { getFile } from '@/lib/db'
 
 type PDFViewerDialogProps = {
   row: Row<DataEntity>
