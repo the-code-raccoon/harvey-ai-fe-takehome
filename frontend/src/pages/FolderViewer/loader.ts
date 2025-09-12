@@ -13,7 +13,6 @@ export const folderViewerLoader = async ({ params }: LoaderFunctionArgs) => {
   const pathRes = await fetch(`http://localhost:3000/folder/path/${id}`)
   if (!pathRes.ok) throw new Response('No path for folder found', { status: 404 })
   const { path } = await pathRes.json()
-  console.log('bitch loader', id, folder, path)
 
   return { folder, path }
 }
