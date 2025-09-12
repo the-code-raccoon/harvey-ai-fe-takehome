@@ -12,6 +12,7 @@ import { useState } from 'react'
 import { Dropzone, DropzoneContent, DropzoneEmptyState } from '@/components/ui/shadcn-io/dropzone'
 import { useFetcher } from 'react-router'
 import type { Folder } from '@/types'
+import { truncateString } from '@/lib/utils'
 
 type UploadFileDialogFormProps = {
   open: boolean
@@ -69,15 +70,15 @@ const UploadFileDialogForm = ({ open, setOpen, folder }: UploadFileDialogFormPro
           {files && files.length > 0 ? (
             <ul className="list-disc pl-5 text-muted-foreground text-sm">
               {files.map((file, index) => (
-                <li key={file.name + index}>{file.name}</li>
+                <li key={file.name + index}>{truncateString(file.name, 50)}</li>
               ))}
             </ul>
           ) : null}
           <div className="flex gap-4 justify-end">
-            <Button variant="outline" onClick={() => setOpen(false)}>
+            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
               Cancel
             </Button>
-            <Button variant="default" disabled={!files} onClick={handleUpload}>
+            <Button type="button" variant="default" disabled={!files} onClick={handleUpload}>
               Upload
             </Button>
           </div>

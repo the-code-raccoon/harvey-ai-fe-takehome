@@ -39,7 +39,7 @@ const RenameDialogForm = ({ row, open, setOpen }: RenameDialogFormProps) => {
             <p className="place-items-end ml-auto text-xs text-muted-foreground">{newName.length}/255</p>
 
             <div className="flex justify-end gap-4 mt-4">
-              <Button variant="secondary" onClick={() => setOpen(false)}>
+              <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
                 Cancel
               </Button>
               <Button type="submit">Save</Button>

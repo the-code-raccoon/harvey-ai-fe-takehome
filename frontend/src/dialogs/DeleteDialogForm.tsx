@@ -10,6 +10,7 @@ import { Button } from '../components/ui/button'
 import type { Row } from '@tanstack/react-table'
 import type { DataEntity } from '@/types'
 import { Form } from 'react-router'
+import { truncateString } from '@/lib/utils'
 
 type DeleteDialogFormProps = {
   row: Row<DataEntity>
@@ -27,14 +28,15 @@ const DeleteDialogForm = ({ row, open, setOpen }: DeleteDialogFormProps) => {
           </DialogHeader>
 
           <DialogDescription>
-            Are you sure you want to permanently delete <b>{row.getValue('name')}</b>?
+            Are you sure you want to permanently delete{' '}
+            <b>{truncateString(row.getValue('name') satisfies string, 70)}</b>?
           </DialogDescription>
 
           <Form method="post" className="flex flex-col w-full justify-start gap-3" onSubmit={() => setOpen(false)}>
             <input type="hidden" name="id" value={row.original.id} />
             <input type="hidden" name="action" value={row.original.type === 'file' ? 'deleteFile' : 'deleteFolder'} />
             <div className="flex justify-end gap-4 mt-4">
-              <Button variant="secondary" onClick={() => setOpen(false)}>
+              <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
                 Cancel
               </Button>
               <Button type="submit" variant="destructive">
