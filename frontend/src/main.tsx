@@ -14,11 +14,13 @@ import {
   createFolderAction,
   uploadFileAction,
 } from './actions'
+import NotFoundPage from './pages/NotFound/NotFound.tsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
+    errorElement: <NotFoundPage />,
     children: [
       {
         index: true,
