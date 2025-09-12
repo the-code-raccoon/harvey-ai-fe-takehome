@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import data from '../data.ts'
-import type { DataEntity } from '../types.ts'
+import type { Folder } from '../types.ts'
 
 const folderRouter = Router()
 
@@ -84,7 +84,7 @@ folderRouter.post('', (req, res) => {
     id++
   }
 
-  const folder = { name, parentFolder, id: String(id), type: 'folder' } satisfies DataEntity
+  const folder = { name, parentFolder, id: String(id), type: 'folder' } satisfies Folder
   data[id] = folder
 
   res.json(folder)

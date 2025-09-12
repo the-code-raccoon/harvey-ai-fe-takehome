@@ -85,7 +85,9 @@ export const columns: ColumnDef<DataEntity>[] = [
       const onRename = table.options.meta?.onRename as (row: Row<DataEntity>) => void
       // @ts-expect-error: to avoid having to type table.options.meta
       const onDelete = table.options.meta?.onDelete as (row: Row<DataEntity>) => void
-      return <ActionsCell row={row} onRename={onRename} onDelete={onDelete} />
+      // @ts-expect-error: to avoid having to type table.options.meta
+      const onView = table.options.meta?.onView as (row: Row<DataEntity>) => void
+      return <ActionsCell row={row} onRename={onRename} onDelete={onDelete} onView={onView} />
     },
   },
 ]

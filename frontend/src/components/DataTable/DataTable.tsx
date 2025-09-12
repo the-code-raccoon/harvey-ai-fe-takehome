@@ -12,8 +12,10 @@ import { useNavigate } from 'react-router'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { useState } from 'react'
 import type { DataEntity } from '@/types'
-import RenameDialogForm from '@/forms/RenameDialogForm'
-import DeleteDialogForm from '@/forms/DeleteDialogForm'
+import RenameDialogForm from '@/dialogs/RenameDialogForm'
+import DeleteDialogForm from '@/dialogs/DeleteDialogForm'
+import PDFViewerDialog from '@/dialogs/PDFViewerDialog'
+import { cn } from '@/lib/utils'
 
 type DataWithId = {
   id: string
@@ -31,6 +33,7 @@ export function DataTable<TData extends DataWithId, TValue>({ columns, data }: D
   const [selectedRow, setSelectedRow] = useState<Row<DataEntity> | null>(null)
   const [renameDialogOpen, setRenameDialogOpen] = useState(false)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [pdfViewerDialogOpen, setPdfViewerDialogOpen] = useState(false)
 
   const openRenameDialog = (row: Row<DataEntity>) => {
     setSelectedRow(row)
@@ -40,6 +43,11 @@ export function DataTable<TData extends DataWithId, TValue>({ columns, data }: D
   const openDeleteDialog = (row: Row<DataEntity>) => {
     setSelectedRow(row)
     setDeleteDialogOpen(true)
+  }
+
+  const openPdfViewerDialog = (row: Row<DataEntity>) => {
+    setSelectedRow(row)
+    setPdfViewerDialogOpen(true)
   }
 
   const navigate = useNavigate()
@@ -56,6 +64,7 @@ export function DataTable<TData extends DataWithId, TValue>({ columns, data }: D
     meta: {
       onRename: openRenameDialog,
       onDelete: openDeleteDialog,
+      onView: openPdfViewerDialog,
     },
   })
 
@@ -86,7 +95,7 @@ export function DataTable<TData extends DataWithId, TValue>({ columns, data }: D
                     navigate(`/${row.original.id}`)
                   }
                 }}
-                className="cursor-pointer"
+                className={cn({ 'cursor-pointer': row.original.type === 'folder' })}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
@@ -105,6 +114,7 @@ export function DataTable<TData extends DataWithId, TValue>({ columns, data }: D
 
       {selectedRow && <RenameDialogForm row={selectedRow} open={renameDialogOpen} setOpen={setRenameDialogOpen} />}
       {selectedRow && <DeleteDialogForm row={selectedRow} open={deleteDialogOpen} setOpen={setDeleteDialogOpen} />}
+      {selectedRow && <PDFViewerDialog row={selectedRow} open={pdfViewerDialogOpen} setOpen={setPdfViewerDialogOpen} />}
     </div>
   )
 }

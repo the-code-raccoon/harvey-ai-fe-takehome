@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import data from '../data.ts'
+import type { File } from '../types.ts'
 
 const fileRouter = Router()
 
@@ -20,6 +21,20 @@ fileRouter.get('/:id', (req, res) => {
   res.json(file)
 })
 
+fileRouter.post('', (req, res) => {
+  const { name, parentFolder } = req.body
+
+  let id = Object.values(data).length
+
+  while (data[id]) {
+    id++
+  }
+
+  const file = { name, parentFolder, id: String(id), type: 'file' } satisfies File
+  data[id] = file
+
+  res.json(file)
+})
 fileRouter.patch('/:id', (req, res) => {
   const id = req.params.id
 

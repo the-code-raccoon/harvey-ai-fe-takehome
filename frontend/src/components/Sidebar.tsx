@@ -1,49 +1,39 @@
-import { Home, Inbox, Calendar, Settings, Trash } from 'lucide-react'
+import { Home, Settings, Trash } from 'lucide-react'
 import {
   SidebarContent,
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
   Sidebar,
-  SidebarFooter,
   SidebarHeader,
   SidebarTrigger,
   useSidebar,
 } from './ui/sidebar'
+import { useNavigate } from 'react-router'
 
 const items = [
   {
     title: 'Home',
-    url: '#',
+    url: '/',
     icon: Home,
   },
   {
-    title: 'Inbox',
-    url: '#',
-    icon: Inbox,
-  },
-  {
-    title: 'Calendar',
-    url: '#',
-    icon: Calendar,
-  },
-  {
     title: 'Trash',
-    url: '#',
+    url: '/',
     icon: Trash,
   },
   {
     title: 'Settings',
-    url: '#',
+    url: '/',
     icon: Settings,
   },
 ]
 
 const AppSidebar = () => {
   const { state } = useSidebar()
+  const navigate = useNavigate()
 
   return (
     <Sidebar collapsible="icon" side="left">
@@ -55,16 +45,13 @@ const AppSidebar = () => {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>somefdhkls</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
+                  <SidebarMenuButton className="cursor-pointer" onClick={() => navigate(item.url)}>
+                    <item.icon />
+                    {item.title}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -72,9 +59,6 @@ const AppSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarGroup>
-        <SidebarFooter>Dark Mode</SidebarFooter>
-      </SidebarGroup>
     </Sidebar>
   )
 }

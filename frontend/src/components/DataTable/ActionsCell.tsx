@@ -8,9 +8,10 @@ type ActionsCellProps = {
   row: Row<DataEntity>
   onRename: (row: Row<DataEntity>) => void
   onDelete: (row: Row<DataEntity>) => void
+  onView: (row: Row<DataEntity>) => void
 }
 
-const ActionsCell = ({ row, onRename, onDelete }: ActionsCellProps) => {
+const ActionsCell = ({ row, onRename, onDelete, onView }: ActionsCellProps) => {
   const type = row.getValue('type') satisfies string
 
   return (
@@ -23,7 +24,12 @@ const ActionsCell = ({ row, onRename, onDelete }: ActionsCellProps) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
           {type === 'file' ? (
-            <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.stopPropagation()
+                onView(row)
+              }}
+            >
               <FolderOpen className="h-4 w-4" />
               Open
             </DropdownMenuItem>

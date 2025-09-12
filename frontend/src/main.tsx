@@ -12,6 +12,7 @@ import {
   renameFolderAction,
   renameFileAction,
   createFolderAction,
+  uploadFileAction,
 } from './actions'
 
 const router = createBrowserRouter([
@@ -39,6 +40,8 @@ const router = createBrowserRouter([
               return await renameFolderAction(formData)
             case 'createFolder':
               return await createFolderAction(formData)
+            case 'uploadFile':
+              return await uploadFileAction(formData)
           }
         },
       },
