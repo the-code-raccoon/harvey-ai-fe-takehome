@@ -1,7 +1,7 @@
 import { ArrowDown, ArrowUp } from 'lucide-react'
 import { match } from 'ts-pattern'
-import type { DataEntity } from './columns'
 import type { SortingColumn } from '@tanstack/react-table'
+import type { DataEntity } from '@/types'
 
 const DirectionIcon = ({ direction }: { direction: ReturnType<SortingColumn<DataEntity>['getIsSorted']> }) => {
   return match(direction)

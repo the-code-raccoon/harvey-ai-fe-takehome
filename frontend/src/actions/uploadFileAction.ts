@@ -1,4 +1,5 @@
 import { saveFile } from '@/lib/db'
+import { getAPI } from '@/lib/utils'
 import type { File as FileEntity } from '@/types'
 
 export async function uploadFileAction(formData: FormData) {
@@ -7,7 +8,7 @@ export async function uploadFileAction(formData: FormData) {
   for (const [, file] of formData.entries()) {
     if (!(file instanceof File)) continue
 
-    const response = await fetch(`http://localhost:3000/file`, {
+    const response = await fetch(`${getAPI()}/file`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

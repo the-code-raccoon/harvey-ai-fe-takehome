@@ -1,8 +1,10 @@
+import { getAPI } from '@/lib/utils'
+
 export async function renameFolderAction(formData: FormData) {
   const name = formData.get('name') as string
   const id = formData.get('id') as string
 
-  const response = await fetch(`http://localhost:3000/folder/${id}`, {
+  const response = await fetch(`${getAPI()}/folder/${id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',

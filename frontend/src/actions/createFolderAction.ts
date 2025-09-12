@@ -1,8 +1,10 @@
+import { getAPI } from '@/lib/utils'
+
 export async function createFolderAction(formData: FormData) {
   const name = formData.get('name') as string
   const parentFolder = formData.get('parentFolder') as string
 
-  const response = await fetch(`http://localhost:3000/folder`, {
+  const response = await fetch(`${getAPI()}/folder`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

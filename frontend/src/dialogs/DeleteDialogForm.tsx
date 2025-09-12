@@ -34,7 +34,7 @@ const DeleteDialogForm = ({ row, open, setOpen }: DeleteDialogFormProps) => {
             <input type="hidden" name="id" value={row.original.id} />
             <input type="hidden" name="action" value={row.original.type === 'file' ? 'deleteFile' : 'deleteFolder'} />
             <div className="flex justify-end gap-4 mt-4">
-              <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
+              <Button variant="secondary" onClick={() => setOpen(false)}>
                 Cancel
               </Button>
               <Button type="submit" variant="destructive">

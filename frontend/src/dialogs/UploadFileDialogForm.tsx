@@ -74,7 +74,9 @@ const UploadFileDialogForm = ({ open, setOpen, folder }: UploadFileDialogFormPro
             </ul>
           ) : null}
           <div className="flex gap-4 justify-end">
-            <Button variant="outline">Cancel</Button>
+            <Button variant="outline" onClick={() => setOpen(false)}>
+              Cancel
+            </Button>
             <Button variant="default" disabled={!files} onClick={handleUpload}>
               Upload
             </Button>

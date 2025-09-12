@@ -5,6 +5,7 @@ import DirectionIcon from './DirectionIcon'
 import { match } from 'ts-pattern'
 import ActionsCell from './ActionsCell'
 import type { DataEntity } from '@/types'
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '../ui/hover-card'
 
 export const columns: ColumnDef<DataEntity>[] = [
   {
@@ -20,39 +21,33 @@ export const columns: ColumnDef<DataEntity>[] = [
     },
     cell: ({ row }) => {
       const name = row.getValue('name') satisfies string
+      const shortenedName = `${name.substring(0, 100)}${name.length > 100 ? '...' : ''}`
       const type = row.getValue('type')
 
       return (
         <div className="flex gap-2 items-center">
-          {match(type)
-            .with('folder', () => (
-              <>
-                <Folder className="h-4 w-4 ml-1.5" />
-                {name}
-              </>
-            ))
-            .with('file', () => (
-              <>
-                <File className="h-4 w-4 ml-1.5" />
-                {name}
-              </>
-            ))
-            .otherwise(() => name)}
+          <HoverCard>
+            {match(type)
+              .with('folder', () => (
+                <>
+                  <Folder className="h-4 w-4 ml-1.5" />
+                  <HoverCardTrigger>{shortenedName}</HoverCardTrigger>
+                </>
+              ))
+              .with('file', () => (
+                <>
+                  <File className="h-4 w-4 ml-1.5" />
+
+                  <HoverCardTrigger>{shortenedName}</HoverCardTrigger>
+                </>
+              ))
+              .otherwise(() => (
+                <HoverCardTrigger>{shortenedName}</HoverCardTrigger>
+              ))}
+            <HoverCardContent className="w-full">{name}</HoverCardContent>
+          </HoverCard>
         </div>
       )
-    },
-  },
-  {
-    accessorKey: 'parentFolder',
-    header: 'Location',
-    cell: ({ row, table }) => {
-      const parentFolderId = row.getValue('parentFolder')
-      const parentFolderName = table
-        .getRowModel()
-        .rows.find((r) => r.original.id === parentFolderId)
-        ?.getValue('name')
-
-      return parentFolderName
     },
   },
   {
